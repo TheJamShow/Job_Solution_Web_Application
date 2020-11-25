@@ -24,10 +24,15 @@
         <input matInput [(ngModel)]="data.industryType">
     </mat-form-field>
     <br>
-    <mat-form-field>
+    <!-- <mat-form-field>
         <mat-label>Posted Date :</mat-label>
         <input matInput [(ngModel)]="data.startDate">
-    </mat-form-field>
+    </mat-form-field> -->
+    <mat-form-field style="display:inline-block; width: 235px">
+        <input matInput [matDatepicker]="picker1" placeholder="start date" [(ngModel)] = "data.startDate">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
     <mat-form-field>
         <mat-label>Expiration Date:</mat-label>
         <input matInput [(ngModel)]="data.induexpirationDatestryType">

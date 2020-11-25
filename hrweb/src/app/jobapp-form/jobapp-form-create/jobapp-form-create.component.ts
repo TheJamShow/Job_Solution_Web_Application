@@ -179,18 +179,18 @@ export class JobappFormCreateComponent implements OnInit {
     // console.log("location is:" , this.job_location);
     // console.log("expirationDate is:" , this.job_expirationDate);
 
-   /* this.firstFormGroup = this._formBuilder.group({
-       firstCtrl: ['', Validators.required]
-     });
-     this.secondFormGroup = this._formBuilder.group({
-       secondCtrl: ''
-     });
-     this.thirdFormGroup = this._formBuilder.group({
-      thirdCtrl: ['', Validators.required]
-     });
-     this.fourthFormGroup = this._formBuilder.group({
-       fourthCtrl: ['', Validators.required]
-    }); */
+    // this.firstFormGroup = this._formBuilder.group({
+    //    firstCtrl: ['', Validators.required]
+    //  });
+    //  this.secondFormGroup = this._formBuilder.group({
+    //    secondCtrl: ''
+    //  });
+    //  this.thirdFormGroup = this._formBuilder.group({
+    //   thirdCtrl: ['', Validators.required]
+    //  });
+    //  this.fourthFormGroup = this._formBuilder.group({
+    //    fourthCtrl: ['', Validators.required]
+    // }); 
   }
 
   onAddJobapp() {

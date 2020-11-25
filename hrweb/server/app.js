@@ -42,7 +42,7 @@ app.use(cookieParser());
 mongoose
     // .set('useCreateIndex', true)
     .connect(
-        "mongodb+srv://huanwu:ABCD1234@webproject-qhq6u.mongodb.net/test?retryWrites=true&w=majority"
+        "mongodb+srv://admin:Admin@123@cluster0.kkwo3.mongodb.net/jobs?retryWrites=true&w=majority"
         , {
             useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true
         })

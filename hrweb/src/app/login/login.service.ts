@@ -33,8 +33,8 @@ export class LoginService {
         return this.authStatusListener.asObservable();
     }
 
-    login(email: string, password: string, role: string) {
-        const authData: LoginData = { email: email, password: password, role: role };
+    login(email: string, password: string) {
+        const authData: LoginData = { email: email, password: password,role:null};
         this.http
             .post<{ token: string; expiresIn: number, userId: string, userRole: string}>(
                 "http://localhost:3000/login",
@@ -42,6 +42,7 @@ export class LoginService {
                 authData
             )
             .subscribe(response => {
+                console.log(response);
                 const token = response.token;
                 this.token = token;
                 if (token) {
@@ -56,6 +57,7 @@ export class LoginService {
                     console.log("role: " ,this.userRole);
                     console.log("token: " ,token);
                     this.saveAuthData(token, expirationDate, this.userId);
+                    console.log(this.userRole);
                     if(this.userRole == 'HR'){
                         this.router.navigate(["/view-posting"]);
                     }
@@ -63,10 +65,14 @@ export class LoginService {
                         this.router.navigate(["/jobspage"]);
                     }
                     else{
-                        this.router.navigate(["/"]);
+                        return false;
                     }
                 }
+                else{
+                    return false;
+                }
             });
+            return true;
     }
 
     getUserEmail() {

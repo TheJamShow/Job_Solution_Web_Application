@@ -38,11 +38,14 @@ export class LoginComponent implements OnInit {
 
   login(){
       this.role = this.choice;
-      this.loginService.login(this.email, this.password, this.role);
+      const res = this.loginService.login(this.email, this.password);
+      console.log(res);
+      if(!(res))
+        this.onClick();
   }
 
   onClick() {
-    this.toastrService.error('wrong password or role must match');
+    this.toastrService.error('wrong password or email must match');
   }
 
 

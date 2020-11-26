@@ -50,8 +50,8 @@ export class JobspageComponent implements OnInit {
   locations: location[] = [
     { value: 'Mumbai', viewValue: 'Mumbai' },
     { value: 'Delhi', viewValue: 'Delhi' },
-    { value: 'Banglore', viewValue: 'Bangalore' },
-    { value: 'Hyderbad', viewValue: 'Hyderabad' },
+    { value: 'Bangalore', viewValue: 'Bangalore' },
+    { value: 'Hyderabad', viewValue: 'Hyderabad' },
     { value: 'Kolkata', viewValue: 'Kolkata' },
     { value: 'Gandhinagar', viewValue: 'Gandhinagar' },
   ];

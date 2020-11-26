@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router,NavigationEnd } from "@angular/router";
 import { LoginService } from "../login/login.service";
 import { HrprofilePopupComponent } from '../hr-form/hrprofile-popup/hrprofile-popup.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -28,6 +28,7 @@ export class HrFormComponent implements OnInit {
   startDate = "";
   note = "";
   contacts = "";
+  mySubscription:any;
   
 
   isLinear = false;
@@ -40,12 +41,29 @@ export class HrFormComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     public dialog: MatDialog
-    ) { }
+    ) {
+      this.router.routeReuseStrategy.shouldReuseRoute = function () {
+        return false;
+      };
+      
+        this.mySubscription = this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          // Trick the Router into believing it's last link wasn't previously loaded
+          this.router.navigated = false;
+        }
+      });
+     }
 
   ngOnInit() {
     this.hr_id = this.loginService.getUserId();
     this.getHrInfo();
     this.loadImg();
+  }
+
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
   //get default info
   getHrInfo() {
@@ -118,6 +136,9 @@ export class HrFormComponent implements OnInit {
       .post("http://localhost:3000/images/update-pic" ,fd)
       .subscribe(response => {
         console.log("res is :", response);
+        this.router.navigate(['/hr-form']);
+        this.mySubscription.unsubscribe();
+
       });
   }
 

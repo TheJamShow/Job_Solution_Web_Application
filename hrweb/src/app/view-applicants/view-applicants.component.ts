@@ -15,6 +15,7 @@ export interface DialogData {
   telephone: string,
   email: string,
   address: string,
+  
   address2: string,
   city: string,
   state: string,
@@ -87,7 +88,8 @@ export class ViewApplicantsComponent {
       .post("http://localhost:3000/jobappform/application_check", req)
       .subscribe(postData => {
         this.applicationResult = postData;
-        // console.log("post data: ", postData);
+      
+        console.log("post data: ", postData);
         // console.log(this.searchResault.length);
         const passData ={
           candidate_num: postData[0].candidate_num,

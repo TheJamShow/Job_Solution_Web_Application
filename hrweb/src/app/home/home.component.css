@@ -1,7 +1,14 @@
 .green {
-    background-color:grey;
+	background-color: grey;
 }
 
 .red {
-    background-color: red;
+	background-color: red;
+}
+
+body,
+.album {
+	background-image: url("../../assets/background1.png");
+	background-repeat: no-repeat;
+	background-size: cover;
 }

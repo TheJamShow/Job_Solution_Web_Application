@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute } from "@angular/router";
+import { Router,NavigationEnd } from "@angular/router";
+
 import { LoginService } from "../login/login.service";
 
 @Component({
@@ -21,17 +23,36 @@ export class HrProfileComponent implements OnInit {
   showDate: Date;
   filePath: "";
   url: string;
+  mySubscription:any;
 
   constructor(
     private http: HttpClient,
     public route: ActivatedRoute,
     private loginService: LoginService,
-  ) { }
+    private router:Router,
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    
+      this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
+   }
 
   ngOnInit() {
     this.hr_id = this.loginService.getUserId();
     this.getHrInfo();
     this.loadImg();
+  }
+
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
   
   //get default account default
@@ -92,6 +113,7 @@ export class HrProfileComponent implements OnInit {
         var base64Flag = 'data:image/jpeg;base64,';
         var imageStr = this.arrayBufferToBase64(data["img"].data.data);
         this.pic = base64Flag + imageStr;
+        
       });
   }
 

@@ -49,6 +49,7 @@ app.post("/delete_job", function (req, res, next) {
 
 //update a posted job
 app.post("/update_job", function (req, res, next) {
+    console.log(req.body.expirationDate);
     job.updateOne(
         { job_id: req.body.job_id },
         {   
@@ -61,7 +62,7 @@ app.post("/update_job", function (req, res, next) {
             industryType: req.body.industryType,
             jobType: req.body.jobType,
             location: req.body.location,
-            candidate: req.body.candidate
+            // candidate: req.body.candidate
         }, 
         function (err, result) {
             if (err) {

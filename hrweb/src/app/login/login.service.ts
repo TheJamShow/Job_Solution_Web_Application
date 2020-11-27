@@ -71,8 +71,11 @@ export class LoginService {
                 else{
                     return false;
                 }
+            },err => {
+                console.log("err");
+                return false;
             });
-            return true;
+            return false;
     }
 
     getUserEmail() {

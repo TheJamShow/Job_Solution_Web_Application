@@ -58,6 +58,7 @@
             <option *ngFor="let choice of choices"  [(value)]="choice" >{{choice}}</option>
         </select> -->
         <button name="login" class="btn btn-lg btn-primary btn-block" type="submit" (click)="login()">Login</button>
+        <br><p class="text-danger">{{wrong}}</p>
     </form>
 
     <p class="mt-5 mb-3 text-muted" style="padding-top: -2em;">

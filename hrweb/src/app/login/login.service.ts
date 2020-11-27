@@ -33,13 +33,47 @@ export class LoginService {
         return this.authStatusListener.asObservable();
     }
 
-    login(email: string, password: string) {
+    getAuthValid(response){
+            console.log("response",response);
+            const token = response.token;
+            this.token = token;
+            console.log(token);
+            if (token) {
+                const expiresInDuration = response.expiresIn;
+                this.setAuthTimer(expiresInDuration);
+                this.isAuthenticated = true;
+                this.userId = response.userId;
+                this.userRole = response.userRole;
+                this.authStatusListener.next(true);
+                const now = new Date();
+                const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+                console.log("role: " ,this.userRole);
+                console.log("token: " ,token);
+                this.saveAuthData(token, expirationDate, this.userId);
+                console.log(this.userRole);
+                if(this.userRole == 'HR'){
+                    this.router.navigate(["/view-posting"]);
+                }
+                else if (this.userRole == 'Candidate'){
+                    this.router.navigate(["/jobspage"]);
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+    }
+
+    async login(email: string, password: string)  {
         const authData: LoginData = { email: email, password: password,role:null};
-        this.http
+        const resp = await this.http
             .post<{ token: string; expiresIn: number, userId: string, userRole: string}>(
                 "http://localhost:3000/login",
                 // "login",
                 authData
+<<<<<<< HEAD
             )
             .subscribe(response => {
                 console.log(response);
@@ -76,6 +110,54 @@ export class LoginService {
                 return false;
             });
             return false;
+=======
+            ).toPromise()
+        if(resp){
+            console.log(resp);
+        }
+        else{
+            return false;
+        }
+    
+            // .subscribe(response => {
+            //     console.log("response",response);
+            //     const token = response.token;
+            //     this.token = token;
+            //     console.log(token);
+            //     if (token) {
+            //         const expiresInDuration = response.expiresIn;
+            //         this.setAuthTimer(expiresInDuration);
+            //         this.isAuthenticated = true;
+            //         this.userId = response.userId;
+            //         this.userRole = response.userRole;
+            //         this.authStatusListener.next(true);
+            //         const now = new Date();
+            //         const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+            //         console.log("role: " ,this.userRole);
+            //         console.log("token: " ,token);
+            //         this.saveAuthData(token, expirationDate, this.userId);
+            //         console.log(this.userRole);
+            //         if(this.userRole == 'HR'){
+            //             this.router.navigate(["/view-posting"]);
+            //         }
+            //         else if (this.userRole == 'Candidate'){
+            //             this.router.navigate(["/jobspage"]);
+            //         }
+            //         else{
+            //             return false;
+            //         }
+            //     }
+            //     else{
+            //         return false;
+            //     }
+            // },err => {
+            //     console.log('err');
+            //     return false;
+            // });
+
+            // console.log('true');
+            // return true;
+>>>>>>> 418bdabc94bf83306bd67f1a251950a30b6b48ee
     }
 
     getUserEmail() {

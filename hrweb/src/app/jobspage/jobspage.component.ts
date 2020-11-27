@@ -3,6 +3,7 @@ import { FormControl, NgForm } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute } from "@angular/router";
+import { Router,NavigationEnd } from "@angular/router";
 
 import { JobspagePopupComponent } from './jobspage-popup/jobspage-popup.component';
 import { LoginService } from "../login/login.service";
@@ -50,8 +51,8 @@ export class JobspageComponent implements OnInit {
   locations: location[] = [
     { value: 'Mumbai', viewValue: 'Mumbai' },
     { value: 'Delhi', viewValue: 'Delhi' },
-    { value: 'Banglore', viewValue: 'Bangalore' },
-    { value: 'Hyderbad', viewValue: 'Hyderabad' },
+    { value: 'Bangalore', viewValue: 'Bangalore' },
+    { value: 'Hyderabad', viewValue: 'Hyderabad' },
     { value: 'Kolkata', viewValue: 'Kolkata' },
     { value: 'Gandhinagar', viewValue: 'Gandhinagar' },
   ];
@@ -142,20 +143,40 @@ export class JobspageComponent implements OnInit {
   job: any;
   jobDescription: any;
   userId: string;
+  mySubscription:any;
 
   constructor(
     private http: HttpClient,
     private loginService: LoginService,
     private jobService: JobService,
     public route: ActivatedRoute,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    private router : Router,
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    
+      this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    })
+   }
 
   ngOnInit() {
     this.userId = this.loginService.getUserId();
     console.log("user_id is: " + this.userId);
     this.searchJob(null);
   }
+
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
+  }
+
 
   searchJob(form: NgForm) {
     //console.log(this.enteredjobTitle)
@@ -208,7 +229,14 @@ export class JobspageComponent implements OnInit {
       console.log('The dialog was closed');
       //this.jobTitle = result;
     });
-  } 
+  }
+  
+  resetSearch(){
+    this.router.navigate(['/jobspage']);
+        // this.ngOnInit();
+    this.mySubscription.unsubscribe();
+
+  }
 
 }
 

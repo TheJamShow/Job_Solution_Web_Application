@@ -5,12 +5,21 @@ var mongoose = require('mongoose');
 const searchjob = require("../models/job");
 const app = express.Router();
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 app.post("", function (req, res, next) {
+
+    console.log(req.body.jobTitle);
+    const regex = new RegExp(escapeRegex(req.body.jobTitle), 'gi');
+
    
     //if 1 of conditon meet
     if (req.body.jobTitle != '' && req.body.jobType == '' && req.body.location == '' && req.body.industryType == '') {
-        searchjob.find({ jobTitle: req.body.jobTitle }, function (err, post) {
+        searchjob.find({ title: regex} , function (err, post) {
             if (err) return next(err);
+            console.log(post);
             return res.json(post);
         });
     }
@@ -37,19 +46,19 @@ app.post("", function (req, res, next) {
 
     //if 2 of conditons meet
     if (req.body.jobTitle != '' && req.body.jobType != '' && req.body.location == '' && req.body.industryType == '') {
-        searchjob.find({ jobType: req.body.jobType , jobTitle: req.body.jobTitle }, function (err, post) {
+        searchjob.find({ jobType: req.body.jobType , title: regex }, function (err, post) {
             if (err) return next(err);
             return res.json(post);
         });
     }
     if (req.body.jobTitle != '' && req.body.jobType == '' && req.body.location != '' && req.body.industryType == '') {
-        searchjob.find({ jobTitle: req.body.jobTitle, location: req.body.location  }, function (err, post) {
+        searchjob.find({ title: regex, location: req.body.location  }, function (err, post) {
             if (err) return next(err);
             res.json(post);
         });
     }
     if (req.body.jobTitle != '' && req.body.jobType == '' && req.body.location == '' && req.body.industryType != '') {
-        searchjob.find({ jobTitle: req.body.jobTitle, industryType: req.body.industryType  }, function (err, post) {
+        searchjob.find({ title: regex, industryType: req.body.industryType  }, function (err, post) {
             if (err) return next(err);
             res.json(post);
         });
@@ -75,7 +84,7 @@ app.post("", function (req, res, next) {
   
     //if 3 of conditons meet
     if (req.body.jobTitle != '' && req.body.jobType != '' && req.body.location != '' && req.body.industryType == '')  {
-        searchjob.find({ jobType: req.body.jobType,jobTitle: req.body.jobTitle, location: req.body.location }, function (err, post) {
+        searchjob.find({ jobType: req.body.jobType,title: regex, location: req.body.location }, function (err, post) {
             if (err) return next(err);
             res.json(post);
         });

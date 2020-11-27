@@ -33,46 +33,92 @@ export class LoginService {
         return this.authStatusListener.asObservable();
     }
 
-    login(email: string, password: string) {
-        const authData: LoginData = { email: email, password: password,role:null};
-        this.http
-            .post<{ token: string; expiresIn: number, userId: string, userRole: string}>(
-                "http://localhost:3000/login",
-                // "login",
-                authData
-            )
-            .subscribe(response => {
-                console.log(response);
-                const token = response.token;
-                this.token = token;
-                if (token) {
-                    const expiresInDuration = response.expiresIn;
-                    this.setAuthTimer(expiresInDuration);
-                    this.isAuthenticated = true;
-                    this.userId = response.userId;
-                    this.userRole = response.userRole;
-                    this.authStatusListener.next(true);
-                    const now = new Date();
-                    const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-                    console.log("role: " ,this.userRole);
-                    console.log("token: " ,token);
-                    this.saveAuthData(token, expirationDate, this.userId);
-                    console.log(this.userRole);
-                    if(this.userRole == 'HR'){
-                        this.router.navigate(["/view-posting"]);
-                    }
-                    else if (this.userRole == 'Candidate'){
-                        this.router.navigate(["/jobspage"]);
-                    }
-                    else{
-                        return false;
-                    }
+    getAuthValid(response){
+            console.log("response",response);
+            const token = response.token;
+            this.token = token;
+            console.log(token);
+            if (token) {
+                const expiresInDuration = response.expiresIn;
+                this.setAuthTimer(expiresInDuration);
+                this.isAuthenticated = true;
+                this.userId = response.userId;
+                this.userRole = response.userRole;
+                this.authStatusListener.next(true);
+                const now = new Date();
+                const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+                console.log("role: " ,this.userRole);
+                console.log("token: " ,token);
+                this.saveAuthData(token, expirationDate, this.userId);
+                console.log(this.userRole);
+                if(this.userRole == 'HR'){
+                    this.router.navigate(["/view-posting"]);
+                }
+                else if (this.userRole == 'Candidate'){
+                    this.router.navigate(["/jobspage"]);
                 }
                 else{
                     return false;
                 }
-            });
-            return true;
+            }
+            else{
+                return false;
+            }
+    }
+
+    async login(email: string, password: string)  {
+        const authData: LoginData = { email: email, password: password,role:null};
+        const resp = await this.http
+            .post<{ token: string; expiresIn: number, userId: string, userRole: string}>(
+                "http://localhost:3000/login",
+                // "login",
+                authData
+            ).toPromise()
+        if(resp){
+            console.log(resp);
+        }
+        else{
+            return false;
+        }
+    
+            // .subscribe(response => {
+            //     console.log("response",response);
+            //     const token = response.token;
+            //     this.token = token;
+            //     console.log(token);
+            //     if (token) {
+            //         const expiresInDuration = response.expiresIn;
+            //         this.setAuthTimer(expiresInDuration);
+            //         this.isAuthenticated = true;
+            //         this.userId = response.userId;
+            //         this.userRole = response.userRole;
+            //         this.authStatusListener.next(true);
+            //         const now = new Date();
+            //         const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+            //         console.log("role: " ,this.userRole);
+            //         console.log("token: " ,token);
+            //         this.saveAuthData(token, expirationDate, this.userId);
+            //         console.log(this.userRole);
+            //         if(this.userRole == 'HR'){
+            //             this.router.navigate(["/view-posting"]);
+            //         }
+            //         else if (this.userRole == 'Candidate'){
+            //             this.router.navigate(["/jobspage"]);
+            //         }
+            //         else{
+            //             return false;
+            //         }
+            //     }
+            //     else{
+            //         return false;
+            //     }
+            // },err => {
+            //     console.log('err');
+            //     return false;
+            // });
+
+            // console.log('true');
+            // return true;
     }
 
     getUserEmail() {

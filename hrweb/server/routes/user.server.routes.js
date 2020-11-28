@@ -139,7 +139,7 @@ router.post("/login", (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
-                return res.status(401).json({
+                return res.status(200).json({
                     message: "1Auth failed"
                 });
             }
@@ -148,7 +148,7 @@ router.post("/login", (req, res, next) => {
         })
         .then(result => {
             if (!result) {
-                return res.status(401).json({
+                return res.status(200).json({
                     message: "2Auth failed"
                 });
             }
@@ -165,7 +165,7 @@ router.post("/login", (req, res, next) => {
             });
         })
         .catch(err => {
-            return res.status(401).json({
+            return res.status(200).json({
                 message: "3Auth failed"
             });
         });

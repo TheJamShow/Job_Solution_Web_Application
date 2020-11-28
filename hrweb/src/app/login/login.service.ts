@@ -68,7 +68,7 @@ export class LoginService {
 
     async login(email: string, password: string)  {
         const authData: LoginData = { email: email, password: password,role:null};
-        const resp = await this.http
+        const resp = <object> await this.http
             .post<{ token: string; expiresIn: number, userId: string, userRole: string}>(
                 "http://localhost:3000/login",
                 // "login",
@@ -76,6 +76,8 @@ export class LoginService {
             ).toPromise()
         if(resp){
             console.log(resp);
+            return(this.getAuthValid(resp));
+
         }
         else{
             return false;

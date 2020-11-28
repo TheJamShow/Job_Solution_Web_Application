@@ -4,6 +4,8 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { LoginService } from "./login.service";
 import { ToastContainerDirective } from 'ngx-toastr';
 import { ToastrService } from 'ngx-toastr';
+import { delay } from 'rxjs/operators';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
     'HR',
     'Candidate',
   ];
+  wrong: string;
 
   constructor(private http: HttpClient,
     private loginService: LoginService,
@@ -41,7 +44,12 @@ export class LoginComponent implements OnInit {
       const res = this.loginService.login(this.email, this.password);
       console.log(res);
       if(!(res))
-        this.onClick();
+      {
+        setTimeout(()=>{
+          this.wrong = "Incorrect email and password combination";
+        },2000);
+        //console.log(this.wrong);
+      } //this.onClick();
   }
 
   onClick() {

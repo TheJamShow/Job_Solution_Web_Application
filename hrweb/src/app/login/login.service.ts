@@ -66,9 +66,9 @@ export class LoginService {
             }
     }
 
-    async login(email: string, password: string)  {
+    login(email: string, password: string)  {
         const authData: LoginData = { email: email, password: password,role:null};
-        const resp = <object> await this.http
+        this.http
             .post<{ token: string; expiresIn: number, userId: string, userRole: string}>(
                 "http://localhost:3000/login",
                 // "login",

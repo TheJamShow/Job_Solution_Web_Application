@@ -37,8 +37,8 @@ export interface industry {
 export class PostJobComponent {
   
   hr_id = "";
-  date = new FormControl(new Date());
-  serializedDate = new FormControl((new Date()).toISOString());
+  // date = new FormControl(new Date());
+  // serializedDate = new FormControl((new Date()).toISOString());
 
   companyCtrl = new FormControl();
   filteredCompany: Observable<Company[]>;
@@ -76,8 +76,8 @@ export class PostJobComponent {
   locations: location[] = [
     { value: 'Mumbai', viewValue: 'Mumbai' },
     { value: 'Delhi', viewValue: 'Delhi' },
-    { value: 'Banglore', viewValue: 'Banglore' },
-    { value: 'Hyderbad', viewValue: 'Hyderbad' },
+    { value: 'Bangalore', viewValue: 'Bangalore' },
+    { value: 'Hyderabad', viewValue: 'Hyderabad' },
     { value: 'Kolkata', viewValue: 'Kolkata' },
     { value: 'Gandhinagar', viewValue: 'Gandhinagar' },
 // { value: 'Connecticut', viewValue: 'Connecticut' },
@@ -188,7 +188,7 @@ export class PostJobComponent {
       company: this.companyName,
       location: this.location,
       industryType: this.industryType,
-      startDate: this.startDate,
+      startDate:this.startDate,
       expirationDate: this.expirationDate,
       jobDescription: this.description,
       candidate: [],

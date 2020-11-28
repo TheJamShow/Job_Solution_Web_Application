@@ -4,8 +4,8 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { LoginService } from "./login.service";
 import { ToastContainerDirective } from 'ngx-toastr';
 import { ToastrService } from 'ngx-toastr';
-import { delay } from 'rxjs/operators';
-import { setTimeout } from 'timers';
+// import { delay } from 'rxjs/operators';
+// import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-login',
@@ -47,14 +47,15 @@ export class LoginComponent implements OnInit {
       {
         setTimeout(()=>{
           this.wrong = "Incorrect email and password combination";
-        },2000);
+        },1000);
         //console.log(this.wrong);
-      } //this.onClick();
+      }
+       //this.onClick();
   }
 
-  onClick() {
-    this.toastrService.error('wrong password or email must match');
-  }
+  // onClick() {
+  //   this.toastrService.error('wrong password or email must match');
+  // }
 
 
   // retrivePassword() {

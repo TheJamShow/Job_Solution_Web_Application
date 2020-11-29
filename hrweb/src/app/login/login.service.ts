@@ -113,7 +113,7 @@ export class LoginService {
 
     getUserEmail() {
         return this.userEmail;
-    }     /// added by sharmi -- still under testing
+    }
 
     autoAuthUser() {
         const authInformation = this.getAuthData();

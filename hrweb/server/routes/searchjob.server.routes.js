@@ -112,6 +112,42 @@ app.post("", function (req, res, next) {
         }).sort('expirationDate').limit(6);
     } 
 
+
+    
+
+});
+/*
+app.post("/create", function (req, res, next) {
+    searchjob.create(req.body, function (err, post) {
+        if (err) return next(err);
+        return res.json(post);
+    });
+}); */
+
+module.exports = app;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // find how to perform keyword search like - uppper case/ lower case/ partial word
     // reference for partial search
     /*module.exports = exports = function addPartialFullSearch(schema, options) {
@@ -147,15 +183,3 @@ app.post("", function (req, res, next) {
     }
   }
 }*/
-    
-
-});
-/*
-app.post("/create", function (req, res, next) {
-    searchjob.create(req.body, function (err, post) {
-        if (err) return next(err);
-        return res.json(post);
-    });
-}); */
-
-module.exports = app;

@@ -29,9 +29,6 @@ var ApplicationForm = new mongoose.Schema({
     sponsership: String,
     acknowledgment: String,
     gender: String,
-    hispanic: String,
-    veteran: String,
-    disability: String
 });
 
 module.exports = mongoose.model('ApplicationForm', ApplicationForm);

@@ -75,18 +75,6 @@ export class JobappFormCreateComponent implements OnInit {
     {value: 'Prefer Not to disclose-2', viewValue: 'Prefer Not to disclose'}
   ];
 
-  veterans: Veteran[] = [
-    {value: 'I am not a veteran-0', viewValue: 'I am not a veteran'},
-    {value: 'Recently separated veteran-1', viewValue: 'Recently separated veteran'},
-    {value: 'Disabled veteran-2', viewValue: 'Disabled veteran'},
-    {value: 'I am not a protected veteran-3', viewValue: 'I am not a protected veteran'}
-  ];
-
-  Disabilities: Disability[] = [
-    {value: 'I do not have disability-0', viewValue: 'I do not have disability'},
-    {value: 'I have disability-1', viewValue: 'I have disability'}
-  ];
-
   Educations: Education[] = [
     {value: 'Some College-0', viewValue: 'Some College'},
     {value: 'Juris Doctor-1', viewValue: 'Juris Doctor'},
@@ -233,10 +221,7 @@ export class JobappFormCreateComponent implements OnInit {
       accomplishments: this.enteredAccomplishments,
       sponsership: this.enteredSponsership,
       acknowledgment: this.enteredAcknowledgment,
-      gender: this.enteredGender,
-      hispanic: this.enteredHispanic,
-      veteran: this.enteredVeteran,
-      disability: this.enteredDisability
+      gender: this.enteredGender
     };
     this.jobappCreated.emit(jobapp);
 
@@ -280,22 +265,6 @@ export class JobappFormCreateComponent implements OnInit {
     {
       this.rank++;
     }
-    if(this.enteredHispanic == "Yes-0")
-    {
-      this.rank++;
-    }
-    if(this.enteredVeteran == "Recently separated veteran-1")
-    {
-      this.rank++;
-    }
-    if(this.enteredVeteran == "Disabled veteran-2")
-    {
-      this.rank++;
-    }
-    if(this.enteredVeteran == "I am not a protected veteran-3")
-    {
-      this.rank++;
-    }
 
     //update application that hr can view application form
     let req1 ={
@@ -326,10 +295,7 @@ export class JobappFormCreateComponent implements OnInit {
       accomplishments: jobapp.accomplishments,
       sponsership: jobapp.sponsership,
       acknowledgment: jobapp.acknowledgment,
-      gender: jobapp.gender,
-      hispanic: jobapp.hispanic,
-      veteran: jobapp.veteran,
-      disability: jobapp.disability
+      gender: jobapp.gender
     }
     this.http
       .post("http://localhost:3000/jobappform/apply/application", req1)

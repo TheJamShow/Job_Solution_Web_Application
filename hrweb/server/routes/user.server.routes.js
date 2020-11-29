@@ -232,7 +232,7 @@ module.exports = router;
 
 
 
-router.post("/retrive", (req, res, next) => {
+// router.post("/retrive", (req, res, next) => {
     //     console.log("server side retrive", req.body);
     //     const userEmailExist = User.findOne({
     //         email: req.body.email

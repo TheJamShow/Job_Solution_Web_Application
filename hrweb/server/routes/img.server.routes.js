@@ -8,7 +8,7 @@ const img = require("../models/img");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "D:/college/Mean_Project/Job_Solution_Web_Application/hrweb/server/uploads");
+        cb(null, "C:/Users/Jay/Desktop/jay_C/jay projects/FSDL_Mean/project/Job_Solution_Web_Application/hrweb/server");
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname + ".jpg");
